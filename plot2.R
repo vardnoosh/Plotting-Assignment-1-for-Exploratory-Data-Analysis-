@@ -1,0 +1,8 @@
+data <- read.csv("C:\\Users\\8.1\\Documents\\data\\household_power_consumption.txt", header=TRUE, sep = ";" , na.strings='?', colClasses = c('character','character','numeric' ,'numeric','numeric','numeric','numeric','numeric','numeric'))
+data$Date<- as.Date(data$Date, format = "%d/%m/%Y")
+needed<-subset(data, (data$Date == "2007-02-01" | data$Date == "2007-02-02" ))
+needed<- mutate(needed, datetime = paste(as.Date(needed$Date), needed$Time))
+needed$datetime <- as.POSIXct(needed$datetime)
+png(filename = "C:\\Users\\8.1\\Documents\\data\\Plot2.png",width = 480, height = 480)
+plot(needed$Global_active_power ~ needed$datetime, type = "l", ylab = "Global Active Power (kilowatts)", xlab = "")
+dev.off()
